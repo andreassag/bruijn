@@ -76,6 +76,10 @@ cmake --build build -j
   --bubble-depth 32
 ```
 
+The bundled `data/example_reads.fasta` contains overlapping reads derived from the
+*Escherichia coli* K-12 MG1655 reference genome (`U00096.3`, positions 21-65),
+including one single-base mismatch read (`*_err1`) to mimic sequencing noise.
+
 Supported `k` values are compile-time dispatched: `15,17,19,21,23,25,27,29,31`.
 
 ## Notes on Memory

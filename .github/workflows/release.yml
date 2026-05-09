@@ -1,0 +1,48 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+
+permissions:
+  contents: write
+
+jobs:
+  build-test-release:
+    runs-on: ubuntu-latest
+    env:
+      TAG: ${{ github.ref_name }}
+      OS: linux
+      ARCH: x86_64
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configure
+        run: cmake -S . -B build
+
+      - name: Build
+        run: cmake --build build -j
+
+      - name: Test
+        run: ctest --test-dir build --output-on-failure
+
+      - name: Package release binary
+        run: |
+          set -euo pipefail
+          test -f build/bruijn_assembler
+          mkdir -p dist
+          cp build/bruijn_assembler "dist/bruijn_assembler-${TAG}-${OS}-${ARCH}"
+          chmod +x "dist/bruijn_assembler-${TAG}-${OS}-${ARCH}"
+
+      - name: Create or update GitHub release
+        uses: ncipollo/release-action@v1
+        with:
+          tag: ${{ github.ref_name }}
+          name: ${{ github.ref_name }}
+          artifacts: dist/bruijn_assembler-${{ env.TAG }}-${{ env.OS }}-${{ env.ARCH }}
+          artifactErrorsFailBuild: true
+          allowUpdates: true
+          replacesArtifacts: true
+          generateReleaseNotes: true

@@ -1,5 +1,5 @@
 > [!NOTE]
-> **Archive Notice**: This project is an educational and reference implementation of a De Bruijn graph assembler in C++20. It is finished and archived; no active maintenance or feature development is planned.
+> **Archive Notice**: This project is an educational and reference implementation of a memory-aware De Bruijn graph assembler in modern C++20. It is finished and archived; no active maintenance or feature development is planned.
 
 # De Bruijn Graph Assembler
 
